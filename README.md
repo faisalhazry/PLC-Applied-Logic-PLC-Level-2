@@ -161,6 +161,55 @@ Bonus test: momentarily force I:0/4 on and then back off.  The servo should ener
 ![image](https://github.com/faisalhazry/PLC-Applied-Logic-PLC-Level-2/assets/121289405/c9d6905f-5edd-49e0-a4c6-c856ec00b342)
 
 
+## Project 7 Sensor Calibration 
+![image](https://github.com/faisalhazry/PLC-Applied-Logic-PLC-Level-2/assets/121289405/63d5719b-979d-42a2-91e1-8445977a23cf)
+
+### Sumary 
+This system is at the bo􀀁om of a coal mine, and it’s measuring the concentra􀀂on of O2 in the air (pre􀀁y important).  The O2 sensor degrades over 􀀂me and requires calibra􀀂on by comparing its readings to known values.  Our sensor will read from 0-40%.  We have calibra􀀂on gases which are exactly 0% and 30% O2.  This is advanced, but try it...
+
+Our machine will have two cycles: sampling and calibra􀀂on.  When it’s sampling, it just measures the O2 concentra􀀂on of the air passing by the sensor.  There’s nothing special happening there.
+
+When we go into a calibra􀀂on cycle, it needs to open the 0% gas valve and sample it for 30 seconds. Next it will close the 0% and open the 30% and sample that for 30 seconds.  Finally, it will use the average readings it took over those two periods and use them to “tune” its own scaling parameters according to the following calcula􀀂ons.
+
+### Calibration Calculation 
+Input Min = O2_Zero_Average
+Input Max = ( ( O2_Maximum_ Concentra􀀂on / O2_Calibra􀀂on_Gas_Concentra􀀂on ) * ( O2_Test_Gas_Average - O2_Zero_Average ) ) + O2_Zero_Average O2_Maximum_ Concentra􀀂on = 40(%)
+O2_Calibra􀀂on_Gas_ Concentra􀀂on = 30(%)
+O2_Test_Gas_Average = average reading sampled during 30% gas period
+O2_Zero_Average = average reading sampled during 0% gas period
+
+### IO/ Assigned Memory
+N7:0 - O2 sensor input signal
+B3:0/0 - Calibrate bu􀀁on
+O:0/0 - 0% gas valve (energize open)
+O:0/1 - 30% gas valve (energize open) 
+N7:1 - Measured O2 concentra􀀂on
+N7:2 - O2 input min (for SCP instruc􀀂on, default value = 0)
+N7:3 - O2 input max (for SCP instruc􀀂on, default value = 16383)
+
+### Test Criteria
+To start, run your program on Emulate.  Set N7:0 = 8192, N7:2 = 0 and N7:3 = 16383.  N7:1 should be approximately equal to 20(%).  
+
+The next few steps of this test procedure are going to require some FAST ACTION on your part to get accurate results, so don’t be discouraged, but it might take a li􀀁le prac􀀂ce (or crea􀀂ve programming).
+
+Next, set N7:0 = 0 and toggle B3:0/0 on and then back oﬀ immediately a􀀃er.  Watch your calibra􀀂on cycle!  You want to change N7:0 to 12288 at exactly the same moment that your calibra􀀂on cycle enters its second stage (30% gas).  A􀀃er calibra􀀂on ﬁnishes, N7:1 should be approximately 30(%).  Now change N7:0 to 0.  N7:1 should also be about 0.  Set N7:0 to 16383.  N7:1 should be about 40.
+
+Okay, that’s half of it.  Here comes the hard(er) part!
+
+Last piece - set N7:0 = 100 and toggle B3:0/0 oﬀ and then back on immediately a􀀃er.  Watch your calibra􀀂on cycle!  You want to change N7:0 to 11000 at exactly the same moment that your calibra􀀂on cycle enters its second stage (30% gas).  A􀀃er calibra􀀂on ﬁnishes, N7:1 should be approximately 30(%).  Now change N7:0 to 100.  N7:1 should also be about 0.  Set N7:0 to 14633.  N7:1 should be about 40.
+
+### Programing
+#### CAlibration 
+![image](https://github.com/faisalhazry/PLC-Applied-Logic-PLC-Level-2/assets/121289405/7d892019-0a12-49dc-9dfe-34e85fdcd163)
+
+#### IO
+![image](https://github.com/faisalhazry/PLC-Applied-Logic-PLC-Level-2/assets/121289405/c400cb13-f4cc-4630-9eb0-7b47294aabff)
+
+#### Main
+![image](https://github.com/faisalhazry/PLC-Applied-Logic-PLC-Level-2/assets/121289405/229496aa-be88-4eb4-ab4c-db0750a764b1)
+
+
+
 
 
 
