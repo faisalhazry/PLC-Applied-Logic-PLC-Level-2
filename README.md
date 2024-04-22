@@ -26,12 +26,15 @@ Lastly, force both pressure switches off and verify that the pump starts back up
 
 ### Programing
 #### Control
-![image](https://github.com/faisalhazry/PLC-Applied-Logic-PLC-Level-2/assets/121289405/b9967335-dd32-425a-ad4f-d97736c1f825)
+![image](https://github.com/faisalhazry/PLC-Applied-Logic-PLC-Level-2/assets/121289405/3337234b-9dff-4f61-a448-afe55389bc43)
+
 
 #### Digital IO
 ![image](https://github.com/faisalhazry/PLC-Applied-Logic-PLC-Level-2/assets/121289405/da6198ca-1089-4182-b5ce-9ed77e4aba1a)
 
 #### Main 
 ![image](https://github.com/faisalhazry/PLC-Applied-Logic-PLC-Level-2/assets/121289405/163c1107-f79d-4cc0-adce-9451d42adff5)
+
+## Project 2 Digital control logic
 
 
